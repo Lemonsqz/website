@@ -23,8 +23,10 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', IndexListView.as_view(), name='home'),
+    path('accessories', AccessoryListView.as_view(), name='acces'),
+    path('smartphones', smartphone, name='phones'),
     path('cart', cart, name='cart'),
-    path('detail/<slug>/', ProductDetailView.as_view(), name='detail' ),
+    path('detail/<slug>/', ProductDetailView.as_view(), name='detail'),
     path('summernote/', include('django_summernote.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
