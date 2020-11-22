@@ -12,11 +12,13 @@
     <!-- Example row of columns -->
     <div class="row">
       <div class="col-md-12">
-        <h2>{{ product.name }}</h2>
 
-        {{ product.img|safe }}
+        <h2>{{ access.name }}</h2>
 
-        {{ project.description|safe }}
+        {{ access.img|safe }}
+
+        {{ object.description|safe }}
+
         <form method="post" action="./cart/">
           <input type="hidden" name="csrfmiddlewaretoken"
                  value="N4vcBqzjoYkU7OTDuAT8hq8srpvYX44nJsswuP7e3EYg0Hq8DgxuR0eiXWbSr5RZ">

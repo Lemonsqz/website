@@ -7,6 +7,30 @@
 
 <main role="main">
 
+  <div class="container">
+    <!-- Example row of columns -->
+
+    <h1>Аксессуары</h1>
+
+    <div class="row">
+
+
+  {% for product in object_list %}
+    <div class="col-md-4">
+      <h2>{{ product.name }}</h2>
+
+        <a href="{{ product.get_absolute_url }}">
+
+        {{ product.img|safe }}
+
+      </a>
+
+
+      <form>
+        <input type="submit" class="btn btn-secondary" value="Добавить в корзину »">
+      </form>
+    </div>
+  {% endfor %}
   <div class="container mt-5 mb-5">
     <!-- Example row of columns -->
 
@@ -16,9 +40,11 @@
     </div>
 
 
-  </div> <!-- /container -->
 
-</main>
+    </div> <!-- /container -->
+        {% include 'pagination.html' with page=obj %}
+
+  </div>
 
 
 

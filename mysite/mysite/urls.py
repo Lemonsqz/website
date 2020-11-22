@@ -22,11 +22,15 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', IndexListView.as_view(), name='home'),
-    path('accessories', AccessoryListView.as_view(), name='acces'),
-    path('smartphones', smartphone, name='phones'),
-    path('cart', cart, name='cart'),
-    path('detail/<slug>/', ProductDetailView.as_view(), name='detail'),
+    path('', IndexView.as_view(), name='home'),
+    path('accessories', AccessoryList.as_view(), name='acces'),
+    path('smartphones', PhoneList.as_view(), name='phones'),
+    path('notebooks', NotebookList.as_view(), name='notebooks'),
+    path('cart', CartView.as_view(), name='cart'),
+    path('phone_detail/<slug>/', PhoneDetailView.as_view(), name='phone_detail'),
+    path('access_detail/<slug>/', AccessoryDetailView.as_view(), name='access_detail'),
+    path('notebook_detail/<slug>/', NotebookDetailView.as_view(), name='notebook_detail'),
+    path('add-to-cart/<slug>/',AddToCartView.as_view(), name='add_to_cart'),
     path('summernote/', include('django_summernote.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

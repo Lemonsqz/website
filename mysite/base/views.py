@@ -1,45 +1,81 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect
-
+from django.http import HttpResponseRedirect
 # Create your views here.
+from django.views import View
 from django.views.generic import DetailView, ListView
 
-from base.models import Product
+from base.models import Phone, Accessory, Notebook, Customer, Cart
 
 
-class IndexListView(ListView):
-    queryset = Product.objects.all().order_by('-date')[:3]
-    model = Product
-    template_name = 'index.html'
+class IndexView(View):
+
+    def get(self, request, *args, **kwargs):
+        phones = Phone.objects.all().order_by('-date')[:3]
+        notebooks = Notebook.objects.all().order_by('-date')[:3]
+        context = {
+            'phone_list': phones,
+            'notebook_list': notebooks,
+
+        }
+        return render(request, 'index.html', context)
 
 
-def cart(request):
-    return render(request, 'cart.html')
+class AddToCartView(View):
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponseRedirect('cart')
 
 
-class ProductDetailView(DetailView):
-    context_object_name = 'product'
-    model = Product
-    template_name = 'phone.html'
+class CartView(View):
+
+    def get(self, request, *args, **kwargs):
+        customer = Customer.objects.get(user=request.user)
+        cart = Cart.objects.get(owner=customer)
+        context = {
+            'cart': cart
+        }
+        return render(request, 'cart.html', context)
 
 
-class AccessoryListView(ListView):
-    model = Product
+class PhoneDetailView(DetailView):
+    model = Phone
+    context_object_name = 'phones'
+    template_name = 'phone_detail.html'
+    slug_url_kwarg = 'slug'
+
+
+class AccessoryList(ListView):
+    model = Accessory
+    context_object_name = 'access'
+    paginate_by = 2
     template_name = 'empty_section.html'
 
 
-def smartphone(request):
-    phones_list = Product.objects.all()
-    paginator = Paginator(phones_list, 2)
-    page = request.GET.get('page', 1)
+class AccessoryDetailView(DetailView):
+    model = Accessory
+    context_object_name = 'access'
+    template_name = 'access_detail.html'
 
-    try:
-        phones = paginator.page(page)
 
-    except PageNotAnInteger:
-        phones = paginator.page(1)
+class PhoneList(ListView):
+    model = Phone
+    queryset = Phone.objects.all()
+    context_object_name = 'phones'
+    paginate_by = 2
+    template_name = 'smartphones.html'
 
-    except EmptyPage:
-        phones = paginator.page(paginator.num_pages)
 
-    return render(request, 'smartphones.html', {'page': page, 'phones': phones, 'objects': phones_list})
+class NotebookList(ListView):
+    model = Notebook
+    queryset = Notebook.objects.all()
+    context_object_name = 'notebooks'
+    paginate_by = 2
+    template_name = 'notebooks.html'
+
+
+class NotebookDetailView(DetailView):
+    model = Notebook
+    context_object_name = 'notebooks'
+    template_name = 'notebook_detail.html'
+    slug_url_kwarg = 'slug'

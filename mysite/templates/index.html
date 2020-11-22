@@ -16,8 +16,8 @@
   <div class="container mb-5">
     <!-- Example row of columns -->
     <div class="row">
-  {% for item in object_list %}
-      <div class="col-md-4">
+  {% for item in phone_list %}
+      <div class="col-md-4 mb-5">
         <h2>{{ item.name }}</h2>
 
         <a href="{{ item.get_absolute_url }}">
@@ -25,10 +25,10 @@
           {{ item.img|safe }}
 
         </a>
+        <h3 style="margin-left:15%">{{ item.price|floatformat }} Р</h3>
 
-        <form>
-          <input type="submit" class="btn btn-secondary" value="Добавить в корзину »">
-        </form>
+          <a href="{% url 'cart' %}"> <button class="btn btn-secondary">Добавить в корзину</button></a>
+
       </div>
   {% endfor %}
 
@@ -36,7 +36,7 @@
 
   <div class="jumbotron">
     <div class="container">
-      <h1 class="display-4">Не знаете что одеть летом?</h1>
+      <h1 class="display-4">В продаже так же имеются ноутбуки</h1>
       <p>Вот что мы можем предложить:</p>
     </div>
   </div>
@@ -45,21 +45,21 @@
   <div class="container mb-5">
     <!-- Example row of columns -->
     <div class="row">
-
+  {% for item in notebook_list %}
       <div class="col-md-4">
-        <h2>Фуфайка</h2>
+        <h2>{{ item.name }}</h2>
 
-        <a href="./phone.html">
+        <a href="{{ item.get_absolute_url }}">
 
-          <img src="{% static 'images/fufajka.jpg' %}" width="180">
+          {{ item.img|safe }}e
 
         </a>
+        <h3 style="margin-left:15%">{{ item.price|floatformat }} Р</h3>
 
-        <form>
-          <input type="submit" class="btn btn-secondary" value="Добавить в корзину »">
-        </form>
+          <a href="{% url 'cart' %}"> <button class="btn btn-secondary">Добавить в корзину</button></a>
+
       </div>
-
+  {% endfor %}
     </div>
   </div> <!-- /container -->
 
